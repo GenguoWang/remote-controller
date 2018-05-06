@@ -56,25 +56,47 @@ async function openNewPage(url) {
 }
 
 async function gotoPrevPage() {
-  await doWithClient(async ()=> {
-    if (isWin) {
-      robot.keyTap('tab', ['control', 'shift'])
-    } else {
+  if (isWin) {
+    robot.keyTap('tab', ['control', 'shift'])
+  } else {
+    await doWithClient(async ()=> {
       // For Mac
       robot.keyTap('left', ['command', 'alt'])
-    }
-  })
+    })
+  }
 }
 
 async function gotoNextPage() {
-  await doWithClient(async ()=> {
-    if (isWin) {
-      robot.keyTap('tab', ['control'])
-    } else {
+  if (isWin) {
+    robot.keyTap('tab', ['control'])
+  } else {
+    await doWithClient(async ()=> {
       // For Mac
       robot.keyTap('right', ['command', 'alt'])
-    }
-  })
+    })
+  }
+}
+
+async function closePage() {
+  if (isWin) {
+    robot.keyTap('w', ['control'])
+  } else {
+    await doWithClient(async () => {
+      // For Mac
+      robot.keyTap('w', ['command'])
+    })
+  }
+}
+
+async function tapKey(key, modifier) {
+  if (!key) {
+    return
+  }
+  if (modifier && modifier.length > 0) {
+    robot.keyTap(key, modifier)
+  } else {
+    robot.keyTap(key)
+  }
 }
 
 async function handlePushes() {
@@ -98,6 +120,12 @@ async function handlePushes() {
       break
     case 'CHROME_PREV_PAGE':
       await gotoPrevPage()
+      break
+    case 'CHROME_CLOSE_PAGE':
+      await closePage()
+      break
+    case 'TAP_KEY':
+      await tapKey(cmd[1], cmd.slice(2))
       break
     default:
       console.warn('push without handler:', push.body)
