@@ -4,6 +4,9 @@ const axios = require('axios')
 const chromeLauncher = require('chrome-launcher')
 const CDP = require('chrome-remote-interface')
 const robot = require('robotjs')
+const os = require('os')
+console.log('run on platform:', os.platform())
+const isWin = os.platform() == 'win32'
 
 const ws = new WebSocket(`wss://stream.pushbullet.com/websocket/${TOKEN}`)
 
@@ -54,15 +57,23 @@ async function openNewPage(url) {
 
 async function gotoPrevPage() {
   await doWithClient(async ()=> {
-    // For Mac
-    robot.keyTap('left', ['command', 'alt'])
+    if (isWin) {
+      robot.keyTap('tab', ['control', 'shift'])
+    } else {
+      // For Mac
+      robot.keyTap('left', ['command', 'alt'])
+    }
   })
 }
 
 async function gotoNextPage() {
   await doWithClient(async ()=> {
-    // For Mac
-    robot.keyTap('right', ['command', 'alt'])
+    if (isWin) {
+      robot.keyTap('tab', ['control'])
+    } else {
+      // For Mac
+      robot.keyTap('right', ['command', 'alt'])
+    }
   })
 }
 
