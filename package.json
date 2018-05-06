@@ -1,0 +1,26 @@
+{
+  "name": "remote-controller",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "dev": "nodemon ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kingo Wang",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "0.18.0",
+    "chrome-launcher": "0.10.2",
+    "chrome-remote-interface": "0.25.5",
+    "rambdax": "0.9.1",
+    "robotjs": "0.5.1",
+    "ws": "5.1.1"
+  },
+  "devDependencies": {
+    "eslint": "4.19.1",
+    "eslint-config-google": "0.9.1",
+    "nodemon": "1.17.4"
+  }
+}
