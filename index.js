@@ -113,7 +113,9 @@ async function handlePushes() {
       await launchChrome()
       break
     case 'CHROME_NEW_PAGE':
-      await openNewPage(cmd[1])
+      const url = cmd.slice(1).join("")
+      console.log('open: ', url)
+      await openNewPage(url)
       break
     case 'CHROME_NEXT_PAGE':
       await gotoNextPage()
